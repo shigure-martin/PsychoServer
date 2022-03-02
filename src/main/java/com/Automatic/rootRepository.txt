@@ -1,0 +1,15 @@
+package com.###.repository;
+
+import com.###.entity.@@@@;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import java.util.List;
+
+/**
+ * @author lli.chen
+ */
+public interface @@@@Repository extends PagingAndSortingRepository<@@@@, Long> {
+    List<@@@@> findByDeleted(boolean deleted);
+    List<@@@@> findByDeleted(boolean deleted, Sort sort);
+}

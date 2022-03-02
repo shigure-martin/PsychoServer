@@ -1,0 +1,31 @@
+package com.###.service;
+
+import com.###.entity.@@@@;
+import com.###.repository.@@@@Repository;
+import com.###.request.OrderRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * @author lli.chen
+ */
+@Service
+public class @@@@Service extends BasicService<@@@@, Long> {
+
+    private @@@@Repository !!!Repository;
+
+    @Autowired
+    public @@@@Service(@@@@Repository !!!Repository) {
+        super(!!!Repository);
+        this.!!!Repository = !!!Repository;
+    }
+
+    public List<@@@@> get@@@@s(int page, int size, List<OrderRequest> order) {
+        Sort sort = getSortBy(order, new @@@@());
+        List<@@@@> result = !!!Repository.findByDeleted(false,sort);
+        return result;
+    }
+}

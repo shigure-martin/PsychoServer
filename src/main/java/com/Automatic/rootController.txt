@@ -1,0 +1,80 @@
+package com.###.controller;
+
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
+import com.###.entity.@@@@;
+import com.###.repository.@@@@Repository;
+import com.###.request.OrderRequest;
+import com.###.response.BaseResponse;
+import com.###.response.PageResponse;
+import com.###.response.SuccessResponse;
+import com.###.service.@@@@Service;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @author lli.chen
+ */
+@RestController
+@RequestMapping("/api/,,,")
+@Api(value = "/api/,,,",tags = "&&&&相关接口")
+public class @@@@Controller extends BaseController {
+    @Autowired
+    private @@@@Service !!!Service;
+
+    @Autowired
+    private @@@@Repository !!!Repository;
+
+    @PostMapping
+    @ApiOperation(value = "新建&&&&")
+    public BaseResponse create(@RequestBody @@@@ !!!) {
+        return new SuccessResponse<>(!!!Service.saveOrUpdate(!!!));
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据Id获取&&&&")
+    public BaseResponse getOne(@PathVariable Long id) {
+        @@@@ !!! = !!!Service.getById(id);
+        return new SuccessResponse<>(!!!);
+    }
+
+    @GetMapping("/list")
+    @ApiOperation(value = "分页获取&&&&")
+    public BaseResponse getList(@RequestParam(required = false, defaultValue = "0") int page,
+                                @RequestParam(required = false, defaultValue = Integer_MAX_VALUE) int size,
+                                @RequestParam(required = false) String searchCondition
+    ) {
+        List<OrderRequest> order = null;
+        Pageable pageable = new PageRequest(page,size);
+        List<@@@@> !!!s = !!!Service.get@@@@s(page,size,order);
+        if (!Strings.isNullOrEmpty(searchCondition)) {
+            !!!s = !!!s.stream().filter(!!! -> !!!.toString().contains(searchCondition)).collect(Collectors.toList());
+        }
+        return new SuccessResponse<>(PageResponse.build(!!!s, pageable));
+    }
+
+    @PutMapping
+    @ApiOperation(value = "更新&&&&")
+    public BaseResponse update(@RequestBody @@@@ !!!) {
+        @@@@ old = !!!Service.getById(!!!.getId());
+        Preconditions.checkNotNull(old);
+        return new SuccessResponse<>(!!!Service.saveOrUpdate(!!!));
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "根据Id删除&&&&")
+    public BaseResponse delete(@PathVariable Long id) {
+        return new SuccessResponse<>(!!!Service.deleteEntity(id));
+    }
+}
