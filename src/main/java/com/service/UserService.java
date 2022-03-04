@@ -63,7 +63,7 @@ public class UserService extends BasicService<Account, Long> implements UserDeta
     private RoleType[] getRoleTypes(RoleType roleType) {
         RoleType[] roleTypes;
         if (roleType == null) {
-            roleTypes = new RoleType[]{RoleType.customer_service, RoleType.expert, RoleType.finance, RoleType.producer};
+            roleTypes = new RoleType[]{RoleType.customer, RoleType.counselor, RoleType.supervisor};
         } else {
             roleTypes = new RoleType[]{roleType};
         }

@@ -1,8 +1,7 @@
 package com.constants;
 
 public enum RoleType {
-    customer_service("客服"),expert("专家"),
-    finance("财务"),producer("生产商"),customer("用户"),superAdmin("管理员");
+    customer("用户"), counselor("咨询师"), supervisor("督导");
     public String role;
 
     RoleType(String r) {
