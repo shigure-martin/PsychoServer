@@ -65,7 +65,7 @@ public class Automatic {
         generate(rootPath + rootControllerPath, "Controller", classDetail);
     }
 
-    private static final String packageName = "celebritiesGathering";
+    private static final String packageName = "";
     private static final String packageSign = "###";
     private static final String classSign = "@@@@";
     private static final String classSignSmall = "!!!";
