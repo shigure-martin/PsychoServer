@@ -26,26 +26,32 @@ public class Account extends IEntity {
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
+    @ApiModelProperty(value = "访客id")
     private Long customerId;
 
+    @ApiModelProperty(value = "访客信息")
     @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "customerId", foreignKey = @ForeignKey(name = "null", value = ConstraintMode
+    @JoinColumn(name = "customerId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "null", value = ConstraintMode
             .NO_CONSTRAINT), insertable = false, updatable = false)
     @Where(clause = "deleted = 0")
     private CustomerInfo customerInfo;
 
+    @ApiModelProperty(value = "咨询师id")
     private Long counselorId;
 
+    @ApiModelProperty(value = "咨询师信息")
     @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "counselorId", foreignKey = @ForeignKey(name = "null", value = ConstraintMode
+    @JoinColumn(name = "counselorId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "null", value = ConstraintMode
             .NO_CONSTRAINT), insertable = false, updatable = false)
     @Where(clause = "deleted = 0")
     private CounselorInfo counselorInfo;
 
+    @ApiModelProperty(value = "督导id")
     private Long supervisorId;
 
+    @ApiModelProperty(value = "督导信息")
     @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "supervisorId", foreignKey = @ForeignKey(name = "null", value = ConstraintMode
+    @JoinColumn(name = "supervisorId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "null", value = ConstraintMode
             .NO_CONSTRAINT), insertable = false, updatable = false)
     @Where(clause = "deleted = 0")
     private SupervisorInfo supervisorInfo;

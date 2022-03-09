@@ -1,20 +1,22 @@
 package com.entity;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import java.util.Date;
 import java.util.Set;
 
 @Data
 @Entity
+@ApiModel(value = "排班信息")
 public class ScheduleInfo extends IEntity {
     private Date date;
 
-    @OneToMany
-    private Set<CounselorInfo> counselorInfos;
+    @ElementCollection
+    private Set<Long> counselorIds;
 
-    @OneToMany
-    private Set<SupervisorInfo> supervisorInfos;
+    @ElementCollection
+    private Set<Long> supervisorIds;
 }

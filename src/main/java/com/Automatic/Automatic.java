@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Automatic {
-    private static final String rootPath = "/Users/lli.chen/IdeaProjects/celebritiesGathering/backserver/src/main/java/com/celebritiesGathering";
+    private static final String rootPath = "D:\\ECNU\\软件开发实践\\PsychoServer\\src\\main\\java\\com";
     private static final String rootControllerPath = "/Automatic/rootController.txt";
     private static final String rootServicePath = "/Automatic/rootService.txt";
     private static final String rootRepositoryPath = "/Automatic/rootRepository.txt";
 
     public static void main(String args[]) throws IOException {
-        List<ClassDetail> classDetails = getClassDetails();
+        List<ClassDetail> classDetails = getAllClassDetails();
         for (ClassDetail classDetail : classDetails) {
             generate(classDetail);
         }
