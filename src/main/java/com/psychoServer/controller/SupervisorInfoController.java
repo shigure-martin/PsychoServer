@@ -4,6 +4,7 @@ import com.psychoServer.entity.SupervisorInfo;
 import com.psychoServer.repository.SupervisorInfoRepository;
 import com.psychoServer.request.OrderRequest;
 import com.psychoServer.response.BaseResponse;
+import com.psychoServer.response.ErrorResponse;
 import com.psychoServer.response.PageResponse;
 import com.psychoServer.response.SuccessResponse;
 import com.psychoServer.service.SupervisorInfoService;
@@ -35,7 +36,10 @@ public class SupervisorInfoController extends BaseController {
     @PostMapping
     @ApiOperation(value = "新建督导信息")
     public BaseResponse create(@RequestBody SupervisorInfo supervisorInfo) {
-        return new SuccessResponse<>(supervisorInfoService.saveOrUpdate(supervisorInfo));
+        if (supervisorInfo.getAccountId() == 0 || supervisorInfo.getAccountId() == null) {
+            return new ErrorResponse("账号id不得为空或0");
+        }
+        return new SuccessResponse<>(supervisorInfoService.create(supervisorInfo));
     }
 
     @GetMapping("/{id}")

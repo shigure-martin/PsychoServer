@@ -6,6 +6,7 @@ import com.google.common.base.Strings;
 import com.psychoServer.repository.CustomerInfoRepository;
 import com.psychoServer.request.OrderRequest;
 import com.psychoServer.response.BaseResponse;
+import com.psychoServer.response.ErrorResponse;
 import com.psychoServer.response.PageResponse;
 import com.psychoServer.response.SuccessResponse;
 import com.psychoServer.service.CustomerInfoService;
@@ -35,7 +36,10 @@ public class CustomerInfoController extends BaseController {
     @PostMapping
     @ApiOperation(value = "新建访客信息")
     public BaseResponse create(@RequestBody CustomerInfo customerInfo) {
-        return new SuccessResponse<>(customerInfoService.saveOrUpdate(customerInfo));
+        if (customerInfo.getAccountId() == 0 || customerInfo.getAccountId() == null) {
+            return new ErrorResponse("账号id不得为空或0");
+        }
+        return new SuccessResponse<>(customerInfoService.create(customerInfo));
     }
 
     @GetMapping("/{id}")

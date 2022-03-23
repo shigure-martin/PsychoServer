@@ -13,6 +13,9 @@ import java.util.Set;
 @Entity
 @ApiModel(value = "咨询师信息")
 public class CounselorInfo extends IEntity {
+    @ApiModelProperty("账号id")
+    private Long accountId;
+
     @ApiModelProperty(value = "咨询师姓名")
     private String counselorName;
 

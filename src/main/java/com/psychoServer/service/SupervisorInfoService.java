@@ -1,5 +1,6 @@
 package com.psychoServer.service;
 
+import com.psychoServer.entity.Account;
 import com.psychoServer.entity.SupervisorInfo;
 import com.psychoServer.repository.SupervisorInfoRepository;
 import com.psychoServer.request.OrderRequest;
@@ -18,6 +19,9 @@ public class SupervisorInfoService extends BasicService<SupervisorInfo, Long> {
     private SupervisorInfoRepository supervisorInfoRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     public SupervisorInfoService(SupervisorInfoRepository supervisorInfoRepository) {
         super(supervisorInfoRepository);
         this.supervisorInfoRepository = supervisorInfoRepository;
@@ -27,5 +31,16 @@ public class SupervisorInfoService extends BasicService<SupervisorInfo, Long> {
         Sort sort = getSortBy(order, new SupervisorInfo());
         List<SupervisorInfo> result = supervisorInfoRepository.findByDeleted(false,sort);
         return result;
+    }
+
+    public SupervisorInfo create(SupervisorInfo supervisorInfo) {
+        SupervisorInfo newOne = saveOrUpdate(supervisorInfo);
+        Account account = userService.getById(supervisorInfo.getAccountId());
+        if (account == null){
+            return null;
+        }
+        account.setSupervisorId(newOne.getId());
+        userService.saveOrUpdate(account);
+        return newOne;
     }
 }

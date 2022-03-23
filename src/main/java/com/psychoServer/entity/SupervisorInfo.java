@@ -11,6 +11,9 @@ import java.util.Set;
 @Entity
 @ApiModel(value = "督导信息")
 public class SupervisorInfo extends IEntity {
+    @ApiModelProperty("账号id")
+    private Long accountId;
+
     @ApiModelProperty(value = "督导姓名")
     private String supervisorName;
 

@@ -12,6 +12,9 @@ import java.util.Set;
 @Entity
 @ApiModel(value = "访客信息")
 public class CustomerInfo extends IEntity {
+    @ApiModelProperty("账号id")
+    private Long accountId;
+
     @ApiModelProperty(value = "访客头像")
     private String customerImage;
 

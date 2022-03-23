@@ -4,6 +4,7 @@ import com.psychoServer.entity.CounselorInfo;
 import com.psychoServer.repository.CounselorInfoRepository;
 import com.psychoServer.request.OrderRequest;
 import com.psychoServer.response.BaseResponse;
+import com.psychoServer.response.ErrorResponse;
 import com.psychoServer.response.PageResponse;
 import com.psychoServer.response.SuccessResponse;
 import com.psychoServer.service.CounselorInfoService;
@@ -35,7 +36,10 @@ public class CounselorInfoController extends BaseController {
     @PostMapping
     @ApiOperation(value = "新建咨询师信息")
     public BaseResponse create(@RequestBody CounselorInfo counselorInfo) {
-        return new SuccessResponse<>(counselorInfoService.saveOrUpdate(counselorInfo));
+        if (counselorInfo.getAccountId() == 0 || counselorInfo.getAccountId() == null) {
+            return new ErrorResponse("账号id不得为空或0");
+        }
+        return new SuccessResponse<>(counselorInfoService.create(counselorInfo));
     }
 
     @GetMapping("/{id}")

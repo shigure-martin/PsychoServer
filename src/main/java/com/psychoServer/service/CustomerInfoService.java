@@ -1,5 +1,6 @@
 package com.psychoServer.service;
 
+import com.psychoServer.entity.Account;
 import com.psychoServer.entity.CustomerInfo;
 import com.psychoServer.repository.CustomerInfoRepository;
 import com.psychoServer.request.OrderRequest;
@@ -18,6 +19,9 @@ public class CustomerInfoService extends BasicService<CustomerInfo, Long> {
     private CustomerInfoRepository customerInfoRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     public CustomerInfoService(CustomerInfoRepository customerInfoRepository) {
         super(customerInfoRepository);
         this.customerInfoRepository = customerInfoRepository;
@@ -27,5 +31,16 @@ public class CustomerInfoService extends BasicService<CustomerInfo, Long> {
         Sort sort = getSortBy(order, new CustomerInfo());
         List<CustomerInfo> result = customerInfoRepository.findByDeleted(false,sort);
         return result;
+    }
+
+    public CustomerInfo create(CustomerInfo customerInfo) {
+        CustomerInfo newOne = saveOrUpdate(customerInfo);
+        Account account = userService.getById(customerInfo.getAccountId());
+        if (account == null){
+            return null;
+        }
+        account.setCustomerId(newOne.getId());
+        userService.saveOrUpdate(account);
+        return newOne;
     }
 }
