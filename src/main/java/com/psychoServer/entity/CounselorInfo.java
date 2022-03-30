@@ -1,5 +1,6 @@
 package com.psychoServer.entity;
 
+import com.psychoServer.constants.Gender;
 import com.psychoServer.constants.WorkStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,6 +14,18 @@ import java.util.Set;
 @Entity
 @ApiModel(value = "咨询师信息")
 public class CounselorInfo extends IEntity {
+    @ApiModelProperty("邮箱")
+    private String email;
+
+    @ApiModelProperty("身份证号码")
+    private String idCardNum;
+
+    @ApiModelProperty("性别")
+    private Gender gender;
+
+    @ApiModelProperty("年龄")
+    private Integer counselorAge;
+
     @ApiModelProperty("账号id")
     private Long accountId;
 

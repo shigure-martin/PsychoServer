@@ -126,4 +126,14 @@ public class UserController extends BaseController {
         userService.deleteEntity(id);
         return new SuccessResponse<>();
     }
+
+    @PutMapping("/setBan")
+    @ApiOperation(value = "根据id禁用、解禁账号")
+    public BaseResponse banOne(@RequestParam Long id, @RequestParam Boolean isBaned) {
+        Account account = userService.getById(id);
+        if (account == null) {
+            return new ErrorResponse("不存在该账号");
+        }
+        return new SuccessResponse(userService.setBaned(account, isBaned));
+    }
 }

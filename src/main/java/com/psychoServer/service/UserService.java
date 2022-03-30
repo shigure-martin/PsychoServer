@@ -69,4 +69,9 @@ public class UserService extends BasicService<Account, Long> implements UserDeta
         }
         return roleTypes;
     }
+
+    public Account setBaned(Account account, Boolean isBaned) {
+        account.setIsBaned(isBaned);
+        return saveOrUpdate(account);
+    }
 }

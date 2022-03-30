@@ -49,6 +49,9 @@ public class Account extends IEntity {
     @ApiModelProperty(value = "督导id")
     private Long supervisorId;
 
+    @ApiModelProperty(value = "是否禁用")
+    private Boolean isBaned;
+
     @ApiModelProperty(value = "督导信息")
     @OneToOne
     @JoinColumn(name = "supervisorId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "null", value = ConstraintMode
