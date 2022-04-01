@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author lli.chen
@@ -42,5 +44,20 @@ public class SupervisorInfoService extends BasicService<SupervisorInfo, Long> {
         account.setSupervisorId(newOne.getId());
         userService.saveOrUpdate(account);
         return newOne;
+    }
+
+    public List<SupervisorInfo> getByIds(Set<Long> supervisorIds) {
+        return supervisorInfoRepository.findByIdInAndDeleted(supervisorIds, false);
+    }
+
+    public SupervisorInfo combine(SupervisorInfo supervisorInfo, Long counselorId) {
+        if (supervisorInfo.getCounselorIds() != null) {
+            supervisorInfo.getCounselorIds().add(counselorId);
+        } else {
+            Set<Long> set = new HashSet<>();
+            set.add(counselorId);
+            supervisorInfo.setCounselorIds(set);
+        }
+        return saveOrUpdate(supervisorInfo);
     }
 }

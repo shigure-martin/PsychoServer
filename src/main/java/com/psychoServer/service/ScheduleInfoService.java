@@ -60,7 +60,7 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
             }else{
                 Set<Long> set= new HashSet<>();
                 set.add(request.getId());
-                scheduleInfo.setCounselorIds(set);
+                scheduleInfo.setSupervisorIds(set);
             }
         }
         saveOrUpdateAll(scheduleInfos);

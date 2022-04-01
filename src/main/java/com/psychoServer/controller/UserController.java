@@ -63,6 +63,9 @@ public class UserController extends BaseController {
         if (account.isDeleted()) {
             return new ErrorResponse("该账户已被停用。");
         }
+        if (account.getIsBaned()) {
+            return new ErrorResponse("该账户已被禁用。");
+        }
 
         return new SuccessResponse<>(account);
 

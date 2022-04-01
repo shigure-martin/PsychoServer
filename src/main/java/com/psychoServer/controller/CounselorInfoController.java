@@ -1,7 +1,9 @@
 package com.psychoServer.controller;
 
 import com.psychoServer.entity.CounselorInfo;
+import com.psychoServer.entity.SupervisorInfo;
 import com.psychoServer.repository.CounselorInfoRepository;
+import com.psychoServer.request.CombineRequest;
 import com.psychoServer.request.OrderRequest;
 import com.psychoServer.response.BaseResponse;
 import com.psychoServer.response.ErrorResponse;
@@ -10,6 +12,7 @@ import com.psychoServer.response.SuccessResponse;
 import com.psychoServer.service.CounselorInfoService;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.psychoServer.service.SupervisorInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +33,9 @@ import java.util.stream.Collectors;
 public class CounselorInfoController extends BaseController {
     @Autowired
     private CounselorInfoService counselorInfoService;
+
+    @Autowired
+    private SupervisorInfoService supervisorInfoService;
 
     @Autowired
     private CounselorInfoRepository counselorInfoRepository;
@@ -76,5 +83,24 @@ public class CounselorInfoController extends BaseController {
     @ApiOperation(value = "根据Id删除咨询师信息")
     public BaseResponse delete(@PathVariable Long id) {
         return new SuccessResponse<>(counselorInfoService.deleteEntity(id));
+    }
+
+    @PutMapping("/combine")
+    @ApiOperation(value = "绑定督导")
+    public BaseResponse combineCounselor(@RequestBody CombineRequest combineRequest) {
+        SupervisorInfo supervisorInfo = supervisorInfoService.getById(combineRequest.getSupervisorId());
+        Preconditions.checkNotNull(supervisorInfo,"该督导不存在");
+        CounselorInfo counselorInfo = counselorInfoService.getById(combineRequest.getCounselorId());
+        Preconditions.checkNotNull(counselorInfo, "不存在该咨询师");
+        supervisorInfoService.combine(supervisorInfo, counselorInfo.getId());
+        return new SuccessResponse(counselorInfoService.combine(counselorInfo, supervisorInfo.getId()));
+    }
+
+    @GetMapping("/more")
+    @ApiOperation(value = "根据多个id获取咨询师信息")
+    public BaseResponse getMore(@RequestBody Set<Long> counselorIds) {
+        if (counselorIds.isEmpty() || counselorIds == null)
+            return new ErrorResponse("咨询师id为空/不存在");
+        return new SuccessResponse(counselorInfoService.getByIds(counselorIds));
     }
 }
