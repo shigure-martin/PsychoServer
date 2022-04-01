@@ -5,6 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author lli.chen
@@ -12,4 +13,6 @@ import java.util.List;
 public interface ScheduleInfoRepository extends PagingAndSortingRepository<ScheduleInfo, Long> {
     List<ScheduleInfo> findByDeleted(boolean deleted);
     List<ScheduleInfo> findByDeleted(boolean deleted, Sort sort);
+
+    List<ScheduleInfo> findByDayOfWeekInAndDeleted(Set<String> list, boolean delete);
 }
