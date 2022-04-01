@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.sql.Timestamp;
 
 @Data
@@ -28,4 +30,13 @@ public class CounselInfo extends IEntity {
 
     @ApiModelProperty(value = "咨询时长")
     private Long duration;
+
+    @ApiModelProperty(value = "评价信息id")
+    private Long evaluateId;
+
+    @OneToOne
+    @JoinColumn(name = "evaluateId", referencedColumnName = "id", insertable = false, updatable = false)
+    @ApiModelProperty(value = "评价信息")
+    private EvaluateInfo evaluateInfo;
+
 }

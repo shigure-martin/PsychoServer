@@ -1,11 +1,13 @@
 package com.psychoServer.controller;
 
+import com.psychoServer.entity.CounselInfo;
 import com.psychoServer.entity.EvaluateInfo;
 import com.psychoServer.repository.EvaluateInfoRepository;
 import com.psychoServer.request.OrderRequest;
 import com.psychoServer.response.BaseResponse;
 import com.psychoServer.response.PageResponse;
 import com.psychoServer.response.SuccessResponse;
+import com.psychoServer.service.CounselInfoService;
 import com.psychoServer.service.EvaluateInfoService;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -30,12 +32,18 @@ public class EvaluateInfoController extends BaseController {
     private EvaluateInfoService evaluateInfoService;
 
     @Autowired
+    private CounselInfoService counselInfoService;
+
+    @Autowired
     private EvaluateInfoRepository evaluateInfoRepository;
 
     @PostMapping
     @ApiOperation(value = "新建评价信息")
     public BaseResponse create(@RequestBody EvaluateInfo evaluateInfo) {
-        return new SuccessResponse<>(evaluateInfoService.saveOrUpdate(evaluateInfo));
+        Preconditions.checkNotNull(evaluateInfo.getCounselInfoId(), "咨询信息id不得为空");
+        CounselInfo counselInfo = counselInfoService.getById(evaluateInfo.getCounselInfoId());
+        Preconditions.checkNotNull(counselInfo,"不存在该咨询信息");
+        return new SuccessResponse<>(evaluateInfoService.create(evaluateInfo, counselInfo));
     }
 
     @GetMapping("/{id}")

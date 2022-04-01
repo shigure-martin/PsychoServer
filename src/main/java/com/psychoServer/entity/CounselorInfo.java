@@ -46,7 +46,7 @@ public class CounselorInfo extends IEntity {
     private Integer counselToday;
 
     @ApiModelProperty(value = "咨询次数")
-    private Integer counselNum;
+    private Integer counselNum = 0;
 
     @ApiModelProperty(value = "今日咨询时长")
     private Long counselTime;

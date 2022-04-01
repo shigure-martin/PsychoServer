@@ -28,4 +28,8 @@ public class CounselInfoService extends BasicService<CounselInfo, Long> {
         List<CounselInfo> result = counselInfoRepository.findByDeleted(false,sort);
         return result;
     }
+
+    public List<CounselInfo> getByCounselorId(Long counselorId) {
+        return counselInfoRepository.findByCounselorIdAndDeleted(counselorId, false);
+    }
 }

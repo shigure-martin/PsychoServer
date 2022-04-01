@@ -12,4 +12,6 @@ import java.util.List;
 public interface CounselInfoRepository extends PagingAndSortingRepository<CounselInfo, Long> {
     List<CounselInfo> findByDeleted(boolean deleted);
     List<CounselInfo> findByDeleted(boolean deleted, Sort sort);
+
+    List<CounselInfo> findByCounselorIdAndDeleted(Long counselorId, boolean deleted);
 }
