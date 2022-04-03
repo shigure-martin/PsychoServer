@@ -96,6 +96,14 @@ public class CounselorInfoController extends BaseController {
         return new SuccessResponse(counselorInfoService.combine(counselorInfo, supervisorInfo.getId()));
     }
 
+    @PutMapping("/comCountModify")
+    @ApiOperation(value = "修改咨询师咨询状态")
+    public BaseResponse comCountModify(@RequestParam Boolean isAdd, @RequestParam Long id){
+        CounselorInfo counselorInfo = counselorInfoService.getById(id);
+        Preconditions.checkNotNull(counselorInfo, "不存在该咨询师");
+        return new SuccessResponse(counselorInfoService.comCountModify(counselorInfo, isAdd));
+    }
+
     @GetMapping("/more")
     @ApiOperation(value = "根据多个id获取咨询师信息")
     public BaseResponse getMore(@RequestBody Set<Long> counselorIds) {

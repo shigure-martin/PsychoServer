@@ -52,6 +52,9 @@ public class CounselorInfo extends IEntity {
     private Long counselTime;
 
     @ApiModelProperty(value = "咨询师状态")
+    private Long comCount = 0L;
+
+    @ApiModelProperty(value = "咨询师状态")
     private WorkStatus workStatus = WorkStatus.left;
 
     @ElementCollection

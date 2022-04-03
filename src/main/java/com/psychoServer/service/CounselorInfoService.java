@@ -1,5 +1,6 @@
 package com.psychoServer.service;
 
+import com.psychoServer.constants.WorkStatus;
 import com.psychoServer.entity.Account;
 import com.psychoServer.entity.CounselorInfo;
 import com.psychoServer.repository.CounselorInfoRepository;
@@ -57,6 +58,18 @@ public class CounselorInfoService extends BasicService<CounselorInfo, Long> {
             Set<Long> set = new HashSet<>();
             set.add(supervisorId);
             counselorInfo.setSupervisorIds(set);
+        }
+        return saveOrUpdate(counselorInfo);
+    }
+
+    public CounselorInfo comCountModify(CounselorInfo counselorInfo, Boolean isAdd) {
+        if (isAdd) {
+            counselorInfo.setComCount(counselorInfo.getComCount() + 1);
+            counselorInfo.setWorkStatus(WorkStatus.busy);
+        } else {
+            counselorInfo.setComCount(counselorInfo.getComCount() - 1);
+            if (counselorInfo.getComCount() == 0)
+                counselorInfo.setWorkStatus(WorkStatus.idle);
         }
         return saveOrUpdate(counselorInfo);
     }
