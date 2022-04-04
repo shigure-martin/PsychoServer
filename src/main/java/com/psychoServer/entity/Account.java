@@ -50,7 +50,7 @@ public class Account extends IEntity {
     private Long supervisorId;
 
     @ApiModelProperty(value = "是否禁用")
-    private Boolean isBaned;
+    private Boolean isBaned = false;
 
     @ApiModelProperty(value = "督导信息")
     @OneToOne
