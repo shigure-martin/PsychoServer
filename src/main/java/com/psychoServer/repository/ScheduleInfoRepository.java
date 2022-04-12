@@ -4,6 +4,7 @@ import com.psychoServer.entity.ScheduleInfo;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -15,4 +16,5 @@ public interface ScheduleInfoRepository extends PagingAndSortingRepository<Sched
     List<ScheduleInfo> findByDeleted(boolean deleted, Sort sort);
 
     List<ScheduleInfo> findByDayOfWeekInAndDeleted(Set<String> list, boolean delete);
+    ScheduleInfo findByDateAfterAndDateBeforeAndDeleted(Date startTime, Date endTime, boolean delete);
 }

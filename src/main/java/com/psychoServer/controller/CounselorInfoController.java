@@ -1,6 +1,7 @@
 package com.psychoServer.controller;
 
 import com.psychoServer.entity.CounselorInfo;
+import com.psychoServer.entity.ScheduleInfo;
 import com.psychoServer.entity.SupervisorInfo;
 import com.psychoServer.repository.CounselorInfoRepository;
 import com.psychoServer.request.CombineRequest;
@@ -12,6 +13,7 @@ import com.psychoServer.response.SuccessResponse;
 import com.psychoServer.service.CounselorInfoService;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.psychoServer.service.ScheduleInfoService;
 import com.psychoServer.service.SupervisorInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,6 +41,9 @@ public class CounselorInfoController extends BaseController {
 
     @Autowired
     private CounselorInfoRepository counselorInfoRepository;
+
+    @Autowired
+    private ScheduleInfoService scheduleInfoService;
 
     @PostMapping
     @ApiOperation(value = "新建咨询师信息")
@@ -110,5 +115,16 @@ public class CounselorInfoController extends BaseController {
         if (counselorIds.isEmpty() || counselorIds == null)
             return new ErrorResponse("咨询师id为空/不存在");
         return new SuccessResponse(counselorInfoService.getByIds(counselorIds));
+    }
+
+    @GetMapping("/today")
+    @ApiOperation(value = "获取当天值班咨询师信息")
+    public BaseResponse getToday() {
+        ScheduleInfo scheduleInfo = scheduleInfoService.getToday();
+        if (!scheduleInfo.getCounselorIds().isEmpty() && scheduleInfo.getCounselorIds() != null) {
+            return new SuccessResponse(counselorInfoService.getByIds(scheduleInfo.getCounselorIds()));
+        } else {
+            return null;
+        }
     }
 }

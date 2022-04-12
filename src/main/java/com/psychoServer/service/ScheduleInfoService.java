@@ -12,10 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -65,5 +62,25 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
         }
         saveOrUpdateAll(scheduleInfos);
         return supervisorInfo;
+    }
+
+    public ScheduleInfo getToday(){
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+        cal.set(Calendar.HOUR_OF_DAY, 0); //时
+        cal.set(Calendar.MINUTE, 0); //分
+        cal.set(Calendar.SECOND, 0); //秒
+        cal.set(Calendar.MILLISECOND, 0);
+        Date startTime = cal.getTime();
+
+        cal.set(Calendar.HOUR_OF_DAY, 23); //时
+        cal.set(Calendar.MINUTE, 59); //分
+        cal.set(Calendar.SECOND, 59); //秒
+        cal.set(Calendar.MILLISECOND, 0);
+        Date endTime = cal.getTime();
+
+        ScheduleInfo scheduleInfo = scheduleInfoRepository.findByDateAfterAndDateBeforeAndDeleted(startTime, endTime, false);
+        return scheduleInfo;
     }
 }
