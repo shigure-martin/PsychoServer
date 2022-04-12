@@ -1,5 +1,6 @@
 package com.psychoServer.service;
 
+import com.psychoServer.constants.RoleType;
 import com.psychoServer.entity.Account;
 import com.psychoServer.entity.SupervisorInfo;
 import com.psychoServer.repository.SupervisorInfoRepository;
@@ -42,6 +43,7 @@ public class SupervisorInfoService extends BasicService<SupervisorInfo, Long> {
             return null;
         }
         account.setSupervisorId(newOne.getId());
+        account.setRoleType(RoleType.supervisor);
         userService.saveOrUpdate(account);
         return newOne;
     }

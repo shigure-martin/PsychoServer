@@ -1,5 +1,6 @@
 package com.psychoServer.service;
 
+import com.psychoServer.constants.RoleType;
 import com.psychoServer.entity.Account;
 import com.psychoServer.entity.CustomerInfo;
 import com.psychoServer.repository.CustomerInfoRepository;
@@ -40,6 +41,7 @@ public class CustomerInfoService extends BasicService<CustomerInfo, Long> {
             return null;
         }
         account.setCustomerId(newOne.getId());
+        account.setRoleType(RoleType.customer);
         userService.saveOrUpdate(account);
         return newOne;
     }

@@ -1,5 +1,6 @@
 package com.psychoServer.service;
 
+import com.psychoServer.constants.RoleType;
 import com.psychoServer.constants.WorkStatus;
 import com.psychoServer.entity.Account;
 import com.psychoServer.entity.CounselorInfo;
@@ -43,6 +44,7 @@ public class CounselorInfoService extends BasicService<CounselorInfo, Long> {
             return null;
         }
         account.setCounselorId(newOne.getId());
+        account.setRoleType(RoleType.counselor);
         userService.saveOrUpdate(account);
         return newOne;
     }
