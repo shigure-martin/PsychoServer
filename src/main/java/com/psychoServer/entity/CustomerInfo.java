@@ -39,6 +39,9 @@ public class CustomerInfo extends IEntity {
     @ApiModelProperty(value = "紧急联系人姓名")
     private String emergencyName;
 
+    @ApiModelProperty(value = "是否被禁用")
+    private Boolean isBaned;
+
     @ApiModelProperty(value = "咨询记录")
     @OneToMany
     @JoinColumn(referencedColumnName = "id", name = "customerId", insertable = false, updatable = false)

@@ -77,7 +77,7 @@ public class ScheduleInfoController extends BaseController {
     public BaseResponse update(@RequestBody ScheduleInfo scheduleInfo) {
         ScheduleInfo old = scheduleInfoService.getById(scheduleInfo.getId());
         Preconditions.checkNotNull(old);
-        return new SuccessResponse<>(scheduleInfoService.saveOrUpdate(scheduleInfo));
+        return new SuccessResponse<>(scheduleInfoService.update(scheduleInfo.getId(), scheduleInfo));
     }
 
     @DeleteMapping("/{id}")

@@ -7,6 +7,7 @@ import com.psychoServer.entity.SupervisorInfo;
 import com.psychoServer.repository.ScheduleInfoRepository;
 import com.psychoServer.request.ModifyWeeklyRequest;
 import com.psychoServer.request.OrderRequest;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -82,5 +83,11 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
 
         ScheduleInfo scheduleInfo = scheduleInfoRepository.findByDateAfterAndDateBeforeAndDeleted(startTime, endTime, false);
         return scheduleInfo;
+    }
+
+    public ScheduleInfo update(Long id, ScheduleInfo scheduleInfo) {
+        ScheduleInfo old = getById(id);
+        BeanUtils.copyProperties(scheduleInfo, old);
+        return saveOrUpdate(old);
     }
 }
