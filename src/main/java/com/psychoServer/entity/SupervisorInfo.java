@@ -1,5 +1,6 @@
 package com.psychoServer.entity;
 
+import com.psychoServer.constants.Gender;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -29,4 +30,22 @@ public class SupervisorInfo extends IEntity {
     @ApiModelProperty(value = "绑定咨询师id")
     @ElementCollection
     private Set<Long> counselorIds;
+
+    @ApiModelProperty("邮箱")
+    private String email;
+
+    @ApiModelProperty("身份证号码")
+    private String idCardNum;
+
+    @ApiModelProperty("性别")
+    private Gender gender;
+
+    @ApiModelProperty("年龄")
+    private Integer counselorAge;
+
+    @ApiModelProperty("督导资质")
+    private String qualification;
+
+    @ApiModelProperty("督导资质编号")
+    private String qualificationNum;
 }

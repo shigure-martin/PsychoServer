@@ -35,6 +35,12 @@ public class CounselorInfo extends IEntity {
     @ApiModelProperty(value = "咨询师联系方式")
     private String phoneNum;
 
+    @ApiModelProperty(value = "工作单位")
+    private String workUnit;
+
+    @ApiModelProperty(value = "工作职称")
+    private String workTitle;
+
     @ApiModelProperty(value = "评价分数")
     private Double evaluateScore = 0.0;
 
