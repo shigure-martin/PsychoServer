@@ -25,6 +25,9 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
     private ScheduleInfoRepository scheduleInfoRepository;
 
     @Autowired
+    private CounselorInfoService counselorInfoService;
+
+    @Autowired
     public ScheduleInfoService(ScheduleInfoRepository scheduleInfoRepository) {
         super(scheduleInfoRepository);
         this.scheduleInfoRepository = scheduleInfoRepository;
@@ -83,6 +86,16 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
 
         ScheduleInfo scheduleInfo = scheduleInfoRepository.findByDateAfterAndDateBeforeAndDeleted(startTime, endTime, false);
         return scheduleInfo;
+    }
+
+    public List<Date> getCounselorSchedule(Long id) {
+        List<ScheduleInfo> scheduleInfos = scheduleInfoRepository.findByCounselorIdsContainsAndDeleted(id, false);
+        return scheduleInfos.stream().map(ScheduleInfo::getDate).collect(Collectors.toList());
+    }
+
+    public List<Date> getSupervisorSchedule(Long id) {
+        List<ScheduleInfo> scheduleInfos = scheduleInfoRepository.findBySupervisorIdsContainsAndDeleted(id, false);
+        return scheduleInfos.stream().map(ScheduleInfo::getDate).collect(Collectors.toList());
     }
 
     public ScheduleInfo update(Long id, ScheduleInfo scheduleInfo) {

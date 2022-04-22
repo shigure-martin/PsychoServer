@@ -44,18 +44,14 @@ public class CounselorInfo extends IEntity {
     @ApiModelProperty(value = "评价分数")
     private Double evaluateScore = 0.0;
 
-    @ApiModelProperty(value = "排班日期（缓存一个月的")
-    @ElementCollection
-    private Set<Date> scheduleDates;
-
     @ApiModelProperty(value = "今日咨询次数")
-    private Integer counselToday;
+    private Integer counselToday = 0;
 
     @ApiModelProperty(value = "咨询次数")
     private Integer counselNum = 0;
 
     @ApiModelProperty(value = "今日咨询时长")
-    private Long counselTime;
+    private Long counselTime = 0L;
 
     @ApiModelProperty(value = "咨询师状态")
     private Long comCount = 0L;

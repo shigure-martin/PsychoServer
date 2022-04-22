@@ -17,4 +17,6 @@ public interface ScheduleInfoRepository extends PagingAndSortingRepository<Sched
 
     List<ScheduleInfo> findByDayOfWeekInAndDeleted(Set<String> list, boolean delete);
     ScheduleInfo findByDateAfterAndDateBeforeAndDeleted(Date startTime, Date endTime, boolean delete);
+    List<ScheduleInfo> findByCounselorIdsContainsAndDeleted(Long id, boolean delete);
+    List<ScheduleInfo> findBySupervisorIdsContainsAndDeleted(Long id, boolean delete);
 }

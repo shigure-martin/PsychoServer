@@ -103,4 +103,24 @@ public class ScheduleInfoController extends BaseController {
             return new SuccessResponse(scheduleInfoService.modifyScheduleSupervisor(request,supervisorInfo));
         }
     }
+
+    @GetMapping("/counselorSchedule")
+    @ApiOperation(value = "根据咨询师id获取个人排班信息")
+    public BaseResponse getByCounselorId(@RequestParam Long id) {
+        CounselorInfo counselorInfo = counselorInfoService.getById(id);
+        if (counselorInfo == null)
+            return new ErrorResponse("不存在该咨询师");
+        else
+            return new SuccessResponse(scheduleInfoService.getCounselorSchedule(id));
+    }
+
+    @GetMapping("/supervisorSchedule")
+    @ApiOperation(value = "根据督导id获取个人排班信息")
+    public BaseResponse getBySupervisorId(@RequestParam Long id) {
+        SupervisorInfo supervisorInfo = supervisorInfoService.getById(id);
+        if (supervisorInfo == null)
+            return new ErrorResponse("不存在该督导");
+        else
+            return new SuccessResponse(scheduleInfoService.getSupervisorSchedule(id));
+    }
 }

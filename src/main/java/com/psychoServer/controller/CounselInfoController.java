@@ -76,4 +76,10 @@ public class CounselInfoController extends BaseController {
     public BaseResponse delete(@PathVariable Long id) {
         return new SuccessResponse<>(counselInfoService.deleteEntity(id));
     }
+
+    @GetMapping("/todayAll")
+    public BaseResponse getTodayAll() {
+        //CounselInfo counselInfo
+        return null;
+    }
 }

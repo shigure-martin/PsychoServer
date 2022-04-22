@@ -44,6 +44,8 @@ public class EvaluateInfoService extends BasicService<EvaluateInfo, Long> {
         counselInfoService.saveOrUpdate(counselInfo);
         CounselorInfo counselorInfo = counselorInfoService.getById(counselInfo.getCounselorId());
         counselorInfo.setCounselNum(counselorInfo.getCounselNum() + 1);
+        counselorInfo.setCounselTime(counselorInfo.getCounselTime() + counselInfo.getDuration());
+        counselorInfo.setCounselToday(counselorInfo.getCounselToday() + 1);
         counselorInfo.setEvaluateScore(counselorInfo.getEvaluateScore() + evaluateInfo.getStarToCounselor());
         counselorInfoService.saveOrUpdate(counselorInfo);
         return evaluateInfo;
