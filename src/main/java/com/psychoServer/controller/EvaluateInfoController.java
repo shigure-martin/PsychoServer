@@ -5,6 +5,7 @@ import com.psychoServer.entity.EvaluateInfo;
 import com.psychoServer.repository.EvaluateInfoRepository;
 import com.psychoServer.request.OrderRequest;
 import com.psychoServer.response.BaseResponse;
+import com.psychoServer.response.ErrorResponse;
 import com.psychoServer.response.PageResponse;
 import com.psychoServer.response.SuccessResponse;
 import com.psychoServer.service.CounselInfoService;
@@ -43,6 +44,9 @@ public class EvaluateInfoController extends BaseController {
         Preconditions.checkNotNull(evaluateInfo.getCounselInfoId(), "咨询信息id不得为空");
         CounselInfo counselInfo = counselInfoService.getById(evaluateInfo.getCounselInfoId());
         Preconditions.checkNotNull(counselInfo,"不存在该咨询信息");
+        if (counselInfo.getEvaluateId() != null) {
+            return new ErrorResponse("该咨询记录已存在，请勿重复创建");
+        }
         return new SuccessResponse<>(evaluateInfoService.create(evaluateInfo, counselInfo));
     }
 

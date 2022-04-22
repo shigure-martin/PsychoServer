@@ -70,6 +70,6 @@ public class CounselorInfo extends IEntity {
     @ApiModelProperty(value = "咨询记录")
     @OneToMany
     @JoinColumn(referencedColumnName = "id", name = "counselorId", foreignKey = @ForeignKey(name = "null", value = ConstraintMode
-            .NO_CONSTRAINT),insertable = false, updatable = false)
+            .NO_CONSTRAINT), insertable = false, updatable = false)
     private Set<CounselInfo> counselInfos;
 }

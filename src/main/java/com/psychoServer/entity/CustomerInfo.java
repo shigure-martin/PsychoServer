@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -44,6 +45,7 @@ public class CustomerInfo extends IEntity {
 
     @ApiModelProperty(value = "咨询记录")
     @OneToMany
-    @JoinColumn(referencedColumnName = "id", name = "customerId", insertable = false, updatable = false)
+    @JoinColumn(referencedColumnName = "id", name = "customerId",foreignKey = @ForeignKey(name = "null", value = ConstraintMode
+            .NO_CONSTRAINT), insertable = false, updatable = false)
     private Set<CounselInfo> counselInfos;
 }
