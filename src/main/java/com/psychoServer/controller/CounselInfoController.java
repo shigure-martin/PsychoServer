@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +36,8 @@ public class CounselInfoController extends BaseController {
     @PostMapping
     @ApiOperation(value = "新建咨询记录")
     public BaseResponse create(@RequestBody CounselInfo counselInfo) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        counselInfo.setStartTime(timestamp);
         return new SuccessResponse<>(counselInfoService.saveOrUpdate(counselInfo));
     }
 

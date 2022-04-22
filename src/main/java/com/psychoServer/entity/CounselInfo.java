@@ -4,9 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Data
@@ -35,7 +33,8 @@ public class CounselInfo extends IEntity {
     private Long evaluateId;
 
     @OneToOne
-    @JoinColumn(name = "evaluateId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "evaluateId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "null", value = ConstraintMode
+            .NO_CONSTRAINT), insertable = false, updatable = false)
     @ApiModelProperty(value = "评价信息")
     private EvaluateInfo evaluateInfo;
 
