@@ -71,6 +71,7 @@ public class CounselorInfoService extends BasicService<CounselorInfo, Long> {
         } else {
             counselorInfo.setComCount(counselorInfo.getComCount() - 1);
             if (counselorInfo.getComCount() <= 0)
+                counselorInfo.setComCount(0L);
                 counselorInfo.setWorkStatus(WorkStatus.idle);
         }
         return saveOrUpdate(counselorInfo);
