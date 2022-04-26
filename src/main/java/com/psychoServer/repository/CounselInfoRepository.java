@@ -14,4 +14,5 @@ public interface CounselInfoRepository extends PagingAndSortingRepository<Counse
     List<CounselInfo> findByDeleted(boolean deleted, Sort sort);
 
     List<CounselInfo> findByCounselorIdAndDeleted(Long counselorId, boolean deleted);
+    List<CounselInfo> findBySupervisorIdAndDeleted(Long supervisorId, boolean deleted);
 }

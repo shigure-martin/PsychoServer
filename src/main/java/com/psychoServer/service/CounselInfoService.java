@@ -32,4 +32,8 @@ public class CounselInfoService extends BasicService<CounselInfo, Long> {
     public List<CounselInfo> getByCounselorId(Long counselorId) {
         return counselInfoRepository.findByCounselorIdAndDeleted(counselorId, false);
     }
+
+    public List<CounselInfo> getBySupervisorId(Long supervisorId) {
+        return counselInfoRepository.findBySupervisorIdAndDeleted(supervisorId, false);
+    }
 }

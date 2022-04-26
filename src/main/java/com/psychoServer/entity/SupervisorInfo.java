@@ -22,10 +22,10 @@ public class SupervisorInfo extends IEntity {
     private String phoneNum;
 
     @ApiModelProperty(value = "今日咨询次数")
-    private Integer counselToday;
+    private Integer counselToday = 0;
 
     @ApiModelProperty(value = "今日咨询时长")
-    private Long counselTime;
+    private Long counselTime = 0L;
 
     @ApiModelProperty(value = "绑定咨询师id")
     @ElementCollection

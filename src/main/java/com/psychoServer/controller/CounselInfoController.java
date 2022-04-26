@@ -1,6 +1,8 @@
 package com.psychoServer.controller;
 
 import com.psychoServer.entity.CounselInfo;
+import com.psychoServer.entity.CounselorInfo;
+import com.psychoServer.entity.SupervisorInfo;
 import com.psychoServer.repository.CounselInfoRepository;
 import com.psychoServer.request.OrderRequest;
 import com.psychoServer.response.BaseResponse;
@@ -9,6 +11,8 @@ import com.psychoServer.response.SuccessResponse;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.psychoServer.service.CounselInfoService;
+import com.psychoServer.service.CounselorInfoService;
+import com.psychoServer.service.SupervisorInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,12 @@ import java.util.stream.Collectors;
 public class CounselInfoController extends BaseController {
     @Autowired
     private CounselInfoService counselInfoService;
+
+    @Autowired
+    private CounselorInfoService counselorInfoService;
+
+    @Autowired
+    private SupervisorInfoService supervisorInfoService;
 
     @Autowired
     private CounselInfoRepository counselInfoRepository;
@@ -81,5 +91,21 @@ public class CounselInfoController extends BaseController {
     public BaseResponse getTodayAll() {
         //CounselInfo counselInfo
         return null;
+    }
+
+    @GetMapping("/counselor")
+    @ApiOperation(value = "获取咨询师咨询记录")
+    public BaseResponse getCounselor(@RequestParam Long id) {
+        CounselorInfo counselorInfo = counselorInfoService.getById(id);
+        Preconditions.checkNotNull(counselorInfo, "不存在该咨询师");
+        return new SuccessResponse(counselInfoService.getByCounselorId(counselorInfo.getId()));
+    }
+
+    @GetMapping("/supervisor")
+    @ApiOperation(value = "获取督导咨询记录")
+    public BaseResponse getSupervisor(@RequestParam Long id) {
+        SupervisorInfo supervisorInfo = supervisorInfoService.getById(id);
+        Preconditions.checkNotNull(supervisorInfo, "不存在该咨询师");
+        return new SuccessResponse(counselInfoService.getBySupervisorId(supervisorInfo.getId()));
     }
 }

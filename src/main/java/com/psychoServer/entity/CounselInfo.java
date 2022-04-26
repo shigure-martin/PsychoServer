@@ -23,6 +23,9 @@ public class CounselInfo extends IEntity {
     @ApiModelProperty(value = "访客ID")
     private Long customerId;
 
+    @ApiModelProperty(value = "督导ID")
+    private Long supervisorId;
+
     @ApiModelProperty(value = "历史会话消息")
     private String historyMessage;
 

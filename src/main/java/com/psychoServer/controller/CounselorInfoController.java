@@ -127,4 +127,10 @@ public class CounselorInfoController extends BaseController {
             return null;
         }
     }
+
+    @GetMapping("/numRank")
+    @ApiOperation(value = "获取当月咨询记录排行")
+    public BaseResponse getNumRank() {
+        return null;
+    }
 }
