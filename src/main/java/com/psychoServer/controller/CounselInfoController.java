@@ -88,7 +88,15 @@ public class CounselInfoController extends BaseController {
     }
 
     @GetMapping("/todayAll")
+    @ApiOperation(value = "获取一日的咨询统计")
     public BaseResponse getTodayAll() {
+        //CounselInfo counselInfo
+        return null;
+    }
+
+    @GetMapping("/weekAll")
+    @ApiOperation(value = "获取七日的咨询统计")
+    public BaseResponse getWeekAll() {
         //CounselInfo counselInfo
         return null;
     }

@@ -4,7 +4,7 @@ import lombok.Data;
 
 
 @Data
-public class TodayTimeAndNumRequest {
+public class CounselStatisticRequest {
     private String duringTime;
 
     private Integer counselNum;

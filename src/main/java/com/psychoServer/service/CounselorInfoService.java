@@ -70,7 +70,7 @@ public class CounselorInfoService extends BasicService<CounselorInfo, Long> {
             counselorInfo.setWorkStatus(WorkStatus.busy);
         } else {
             counselorInfo.setComCount(counselorInfo.getComCount() - 1);
-            if (counselorInfo.getComCount() == 0)
+            if (counselorInfo.getComCount() <= 0)
                 counselorInfo.setWorkStatus(WorkStatus.idle);
         }
         return saveOrUpdate(counselorInfo);
