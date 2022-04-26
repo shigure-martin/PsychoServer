@@ -4,10 +4,14 @@ import com.psychoServer.entity.CounselInfo;
 import com.psychoServer.repository.CounselInfoRepository;
 import com.psychoServer.request.CounselStatisticRequest;
 import com.psychoServer.request.OrderRequest;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,7 +42,53 @@ public class CounselInfoService extends BasicService<CounselInfo, Long> {
         return counselInfoRepository.findBySupervisorIdAndDeleted(supervisorId, false);
     }
 
-    public List<CounselStatisticRequest> statisticOneDay (){
-        return null;
+    public List<CounselStatisticRequest> statisticOneDay () {
+        List<CounselStatisticRequest> list = new ArrayList<>();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        for (int i = 0; i < 6; i++) {
+            Date start = calendar.getTime();
+            calendar.add(Calendar.HOUR, 4);
+            Date end = calendar.getTime();
+
+            CounselStatisticRequest request = new CounselStatisticRequest();
+
+            List<CounselInfo> counselInfos = counselInfoRepository.findByStartTimeBetweenAndDeleted(start, end, false);
+            request.setCounselNum(counselInfos.size());
+            request.setDuringTime(end.toString());
+
+            list.add(request);
+        }
+        return list;
+    }
+
+    public List<CounselStatisticRequest> statisticOneWeek () {
+        List<CounselStatisticRequest> list = new ArrayList<>();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        for (int i = 0; i < 7; i++) {
+            Date end = calendar.getTime();
+            calendar.add(Calendar.DATE, -1);
+            Date start = calendar.getTime();
+
+            CounselStatisticRequest request = new CounselStatisticRequest();
+
+            List<CounselInfo> counselInfos = counselInfoRepository.findByStartTimeBetweenAndDeleted(start, end, false);
+
+            request.setCounselNum(counselInfos.size());
+            request.setDuringTime(start.toString());
+
+            list.add(request);
+        }
+        return list;
     }
 }

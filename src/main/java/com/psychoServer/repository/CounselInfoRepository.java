@@ -4,6 +4,7 @@ import com.psychoServer.entity.CounselInfo;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,4 +16,6 @@ public interface CounselInfoRepository extends PagingAndSortingRepository<Counse
 
     List<CounselInfo> findByCounselorIdAndDeleted(Long counselorId, boolean deleted);
     List<CounselInfo> findBySupervisorIdAndDeleted(Long supervisorId, boolean deleted);
+
+    List<CounselInfo> findByStartTimeBetweenAndDeleted(Date start, Date end, boolean deleted);
 }

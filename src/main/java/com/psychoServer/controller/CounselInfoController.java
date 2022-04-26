@@ -91,14 +91,14 @@ public class CounselInfoController extends BaseController {
     @ApiOperation(value = "获取一日的咨询统计")
     public BaseResponse getTodayAll() {
         //CounselInfo counselInfo
-        return null;
+        return new SuccessResponse(counselInfoService.statisticOneDay());
     }
 
     @GetMapping("/weekAll")
     @ApiOperation(value = "获取七日的咨询统计")
     public BaseResponse getWeekAll() {
         //CounselInfo counselInfo
-        return null;
+        return new SuccessResponse(counselInfoService.statisticOneWeek());
     }
 
     @GetMapping("/counselor")

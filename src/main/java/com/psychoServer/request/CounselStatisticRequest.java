@@ -8,6 +8,4 @@ public class CounselStatisticRequest {
     private String duringTime;
 
     private Integer counselNum;
-
-    private Long counselTime;
 }
