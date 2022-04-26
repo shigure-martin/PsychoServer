@@ -96,7 +96,7 @@ public class SupervisorInfoController extends BaseController {
         return new SuccessResponse(supervisorInfoService.combine(supervisorInfo, counselorInfo.getId()));
     }
 
-    @GetMapping("/more")
+    @PostMapping("/more")
     @ApiOperation(value = "根据多个id获取督导信息")
     public BaseResponse getMore(@RequestBody Set<Long> supervisorIds) {
         if (supervisorIds.isEmpty() || supervisorIds == null)

@@ -109,7 +109,7 @@ public class CounselorInfoController extends BaseController {
         return new SuccessResponse(counselorInfoService.comCountModify(counselorInfo, isAdd));
     }
 
-    @GetMapping("/more")
+    @PostMapping("/more")
     @ApiOperation(value = "根据多个id获取咨询师信息")
     public BaseResponse getMore(@RequestBody Set<Long> counselorIds) {
         if (counselorIds.isEmpty() || counselorIds == null)
@@ -131,6 +131,12 @@ public class CounselorInfoController extends BaseController {
     @GetMapping("/numRank")
     @ApiOperation(value = "获取当月咨询记录排行")
     public BaseResponse getNumRank() {
-        return null;
+        return new SuccessResponse(counselorInfoService.getNumRank());
+    }
+
+    @GetMapping("/scoreRank")
+    @ApiOperation(value = "获取当月分数排行")
+    public BaseResponse getScoreRank() {
+        return new SuccessResponse(counselorInfoService.getScoreRank());
     }
 }
