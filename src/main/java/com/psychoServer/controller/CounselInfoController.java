@@ -88,10 +88,17 @@ public class CounselInfoController extends BaseController {
     }
 
     @GetMapping("/todayAll")
-    @ApiOperation(value = "获取一日的咨询统计")
+    @ApiOperation(value = "获取一日的咨询统计(分时)")
     public BaseResponse getTodayAll() {
         //CounselInfo counselInfo
         return new SuccessResponse(counselInfoService.statisticOneDay());
+    }
+
+    @GetMapping("/todaySum")
+    @ApiOperation(value = "获取一日的咨询统计(总和)")
+    public BaseResponse getTodayStatistic() {
+        //CounselInfo counselInfo
+        return new SuccessResponse(counselInfoService.sumOneDay());
     }
 
     @GetMapping("/weekAll")

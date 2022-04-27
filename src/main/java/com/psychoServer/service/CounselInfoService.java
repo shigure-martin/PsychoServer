@@ -42,6 +42,28 @@ public class CounselInfoService extends BasicService<CounselInfo, Long> {
         return counselInfoRepository.findBySupervisorIdAndDeleted(supervisorId, false);
     }
 
+    public CounselStatisticRequest sumOneDay() {
+
+        Calendar calendar = Calendar.getInstance();
+        Date end = calendar.getTime();
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date start = calendar.getTime();
+
+        List<CounselInfo> counselInfos = counselInfoRepository.findByStartTimeBetweenAndDeleted(start, end, false);
+
+        CounselStatisticRequest request = new CounselStatisticRequest();
+
+        request.setCounselTime(counselInfos.stream().mapToLong(CounselInfo::getDuration).sum());
+        request.setCounselNum(counselInfos.size());
+        request.setDuringTime(end.toString());
+
+        return request;
+    }
+
     public List<CounselStatisticRequest> statisticOneDay () {
         List<CounselStatisticRequest> list = new ArrayList<>();
 
