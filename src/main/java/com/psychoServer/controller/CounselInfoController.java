@@ -110,17 +110,32 @@ public class CounselInfoController extends BaseController {
 
     @GetMapping("/counselor")
     @ApiOperation(value = "获取咨询师咨询记录")
-    public BaseResponse getCounselor(@RequestParam Long id) {
+    public BaseResponse getCounselor(@RequestParam(required = false, defaultValue = "0") int page,
+                                     @RequestParam(required = false, defaultValue = Integer_MAX_VALUE) int size,
+                                     @RequestParam Long id) {
         CounselorInfo counselorInfo = counselorInfoService.getById(id);
         Preconditions.checkNotNull(counselorInfo, "不存在该咨询师");
-        return new SuccessResponse(counselInfoService.getByCounselorId(counselorInfo.getId()));
+        List<CounselInfo> list = counselInfoService.getByCounselorId(counselorInfo.getId());
+
+        Pageable pageable = new PageRequest(page,size);
+
+        return new SuccessResponse(PageResponse.build(list, pageable));
+
+
     }
 
     @GetMapping("/supervisor")
     @ApiOperation(value = "获取督导咨询记录")
-    public BaseResponse getSupervisor(@RequestParam Long id) {
+    public BaseResponse getSupervisor(@RequestParam(required = false, defaultValue = "0") int page,
+                                      @RequestParam(required = false, defaultValue = Integer_MAX_VALUE) int size,
+                                      @RequestParam Long id) {
         SupervisorInfo supervisorInfo = supervisorInfoService.getById(id);
         Preconditions.checkNotNull(supervisorInfo, "不存在该咨询师");
-        return new SuccessResponse(counselInfoService.getBySupervisorId(supervisorInfo.getId()));
+
+        List<CounselInfo> list = counselInfoService.getBySupervisorId(supervisorInfo.getId());
+
+        Pageable pageable = new PageRequest(page,size);
+
+        return new SuccessResponse(PageResponse.build(list, pageable));
     }
 }
