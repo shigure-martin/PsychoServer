@@ -1,5 +1,6 @@
 package com.psychoServer.repository;
 
+import com.psychoServer.constants.WorkStatus;
 import com.psychoServer.entity.CounselorInfo;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -15,4 +16,6 @@ public interface CounselorInfoRepository extends PagingAndSortingRepository<Coun
     List<CounselorInfo> findByDeleted(boolean deleted, Sort sort);
 
     List<CounselorInfo> findByIdInAndDeleted(Set<Long> ids, boolean deleted);
+
+    List<CounselorInfo> findByWorkStatusAndDeleted(WorkStatus workStatus, boolean deleted);
 }

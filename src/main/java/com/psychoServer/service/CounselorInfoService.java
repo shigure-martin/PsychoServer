@@ -123,5 +123,15 @@ public class CounselorInfoService extends BasicService<CounselorInfo, Long> {
         Collections.sort(result, (o1, o2) -> o2.getCounselScore().compareTo(o1.getCounselScore()));
         return result;
     }
+
+    public Integer getBusyCounselorNum() {
+        List<CounselorInfo> list = counselorInfoRepository.findByWorkStatusAndDeleted(WorkStatus.busy, false);
+
+        if (list != null) {
+            return list.size();
+        } else {
+            return 0;
+        }
+    }
 }
 

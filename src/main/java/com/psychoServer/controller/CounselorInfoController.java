@@ -139,4 +139,10 @@ public class CounselorInfoController extends BaseController {
     public BaseResponse getScoreRank() {
         return new SuccessResponse(counselorInfoService.getScoreRank());
     }
+
+    @GetMapping("/getBusy")
+    @ApiOperation(value = "获取当前忙碌咨询师数目")
+    public BaseResponse getBusyNow() {
+        return new SuccessResponse(counselorInfoService.getBusyCounselorNum());
+    }
 }
