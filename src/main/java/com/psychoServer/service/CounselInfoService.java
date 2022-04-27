@@ -58,6 +58,7 @@ public class CounselInfoService extends BasicService<CounselInfo, Long> {
             CounselStatisticRequest request = new CounselStatisticRequest();
 
             List<CounselInfo> counselInfos = counselInfoRepository.findByStartTimeBetweenAndDeleted(start, end, false);
+            request.setCounselTime(counselInfos.stream().mapToLong(CounselInfo::getDuration).sum());
             request.setCounselNum(counselInfos.size());
             request.setDuringTime(end.toString());
 
