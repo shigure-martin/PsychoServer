@@ -28,6 +28,9 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
     private CounselorInfoService counselorInfoService;
 
     @Autowired
+    private SupervisorInfoService supervisorInfoService;
+
+    @Autowired
     public ScheduleInfoService(ScheduleInfoRepository scheduleInfoRepository) {
         super(scheduleInfoRepository);
         this.scheduleInfoRepository = scheduleInfoRepository;
@@ -65,6 +68,7 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
         saveOrUpdateAll(scheduleInfos);
 
         counselorInfo.setWeekSchedule(request.getWeekDaysList());
+        counselorInfoService.saveOrUpdate(counselorInfo);
 
         return counselorInfo;
     }
@@ -93,6 +97,7 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
         saveOrUpdateAll(scheduleInfos);
 
         supervisorInfo.setWeekSchedule(request.getWeekDaysList());
+        supervisorInfoService.saveOrUpdate(supervisorInfo);
 
         return supervisorInfo;
     }
