@@ -40,28 +40,51 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
     }
 
     public CounselorInfo modifyScheduleCounselor(ModifyWeeklyRequest request, CounselorInfo counselorInfo) {
-        List<ScheduleInfo> scheduleInfos = scheduleInfoRepository.findByDayOfWeekInAndDeleted(request.getWeekDaysList().stream().map(WeekDays::toString).collect(Collectors.toSet()), false);
+        //List<ScheduleInfo> scheduleInfos = scheduleInfoRepository.findByDayOfWeekInAndDeleted(request.getWeekDaysList().stream().map(WeekDays::toString).collect(Collectors.toSet()), false);
+
+        Date start = getMonthFirstDay();
+        Date end = getMonthLastDat();
+
+        List<ScheduleInfo> scheduleInfos = scheduleInfoRepository.findByDateBetweenAndDeleted(start, end, false);
+
         for (ScheduleInfo scheduleInfo : scheduleInfos) {
-            if (scheduleInfo.getCounselorIds() != null) {
-                scheduleInfo.getCounselorIds().add(request.getId());
+            if (request.getWeekDaysList().contains(scheduleInfo.getDayOfWeek())) {
+                if (scheduleInfo.getCounselorIds() != null) {
+                    scheduleInfo.getCounselorIds().add(request.getId());
+                } else {
+                    Set<Long> set = new HashSet<>();
+                    set.add(request.getId());
+                    scheduleInfo.setCounselorIds(set);
+                }
             } else {
-                Set<Long> set = new HashSet<>();
-                set.add(request.getId());
-                scheduleInfo.setCounselorIds(set);
+                if (scheduleInfo.getCounselorIds() != null && scheduleInfo.getCounselorIds().contains(request.getId())){
+                    scheduleInfo.getCounselorIds().remove(request.getId());
+                }
             }
         }
         saveOrUpdateAll(scheduleInfos);
         return counselorInfo;
     }
     public SupervisorInfo modifyScheduleSupervisor(ModifyWeeklyRequest request, SupervisorInfo supervisorInfo){
-        List<ScheduleInfo> scheduleInfos = scheduleInfoRepository.findByDayOfWeekInAndDeleted(request.getWeekDaysList().stream().map(WeekDays::toString).collect(Collectors.toSet()), false);
+        //List<ScheduleInfo> scheduleInfos = scheduleInfoRepository.findByDayOfWeekInAndDeleted(request.getWeekDaysList().stream().map(WeekDays::toString).collect(Collectors.toSet()), false);
+        Date start = getMonthFirstDay();
+        Date end = getMonthLastDat();
+
+        List<ScheduleInfo> scheduleInfos = scheduleInfoRepository.findByDateBetweenAndDeleted(start, end, false);
+
         for (ScheduleInfo scheduleInfo:scheduleInfos){
-            if (scheduleInfo.getSupervisorIds()!=null){
-                scheduleInfo.getSupervisorIds().add(request.getId());
-            }else{
-                Set<Long> set= new HashSet<>();
-                set.add(request.getId());
-                scheduleInfo.setSupervisorIds(set);
+            if (request.getWeekDaysList().contains(scheduleInfo.getDayOfWeek())) {
+                if (scheduleInfo.getSupervisorIds() != null){
+                    scheduleInfo.getSupervisorIds().add(request.getId());
+                }else{
+                    Set<Long> set= new HashSet<>();
+                    set.add(request.getId());
+                    scheduleInfo.setSupervisorIds(set);
+                }
+            } else {
+                if (scheduleInfo.getSupervisorIds() != null && scheduleInfo.getSupervisorIds().contains(request.getId())) {
+                    scheduleInfo.getSupervisorIds().remove(request.getId());
+                }
             }
         }
         saveOrUpdateAll(scheduleInfos);
@@ -102,5 +125,31 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
         ScheduleInfo old = getById(id);
         BeanUtils.copyProperties(scheduleInfo, old);
         return saveOrUpdate(old);
+    }
+
+    public Date getMonthFirstDay() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        Date start = calendar.getTime();
+
+        return start;
+    }
+
+    public Date getMonthLastDat() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DATE, 1);
+        calendar.roll(Calendar.DATE, -1);
+
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+
+        return calendar.getTime();
     }
 }
