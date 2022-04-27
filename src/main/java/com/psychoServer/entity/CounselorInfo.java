@@ -1,6 +1,7 @@
 package com.psychoServer.entity;
 
 import com.psychoServer.constants.Gender;
+import com.psychoServer.constants.WeekDays;
 import com.psychoServer.constants.WorkStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -68,4 +69,8 @@ public class CounselorInfo extends IEntity {
     @JoinColumn(referencedColumnName = "id", name = "counselorId", foreignKey = @ForeignKey(name = "null", value = ConstraintMode
             .NO_CONSTRAINT), insertable = false, updatable = false)
     private Set<CounselInfo> counselInfos;
+
+    @ElementCollection
+    @ApiModelProperty(value = "每周排班日期")
+    private Set<WeekDays> weekSchedule;
 }

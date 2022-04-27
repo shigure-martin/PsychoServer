@@ -63,6 +63,9 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
             }
         }
         saveOrUpdateAll(scheduleInfos);
+
+        counselorInfo.setWeekSchedule(request.getWeekDaysList());
+
         return counselorInfo;
     }
     public SupervisorInfo modifyScheduleSupervisor(ModifyWeeklyRequest request, SupervisorInfo supervisorInfo){
@@ -88,6 +91,9 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
             }
         }
         saveOrUpdateAll(scheduleInfos);
+
+        supervisorInfo.setWeekSchedule(request.getWeekDaysList());
+
         return supervisorInfo;
     }
 

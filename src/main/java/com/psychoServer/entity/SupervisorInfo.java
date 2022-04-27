@@ -1,6 +1,7 @@
 package com.psychoServer.entity;
 
 import com.psychoServer.constants.Gender;
+import com.psychoServer.constants.WeekDays;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,6 +28,12 @@ public class SupervisorInfo extends IEntity {
     @ApiModelProperty(value = "今日咨询时长")
     private Long counselTime = 0L;
 
+    @ApiModelProperty(value = "总咨询次数")
+    private Integer totalCounselNum = 0;
+
+    @ApiModelProperty(value = "总咨询时长")
+    private Long totalCounselTime = 0L;
+
     @ApiModelProperty(value = "绑定咨询师id")
     @ElementCollection
     private Set<Long> counselorIds;
@@ -48,4 +55,8 @@ public class SupervisorInfo extends IEntity {
 
     @ApiModelProperty("督导资质编号")
     private String qualificationNum;
+
+    @ElementCollection
+    @ApiModelProperty(value = "每周排班日期")
+    private Set<WeekDays> weekSchedule;
 }

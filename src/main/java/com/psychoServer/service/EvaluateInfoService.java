@@ -6,6 +6,7 @@ import com.psychoServer.entity.EvaluateInfo;
 import com.psychoServer.entity.SupervisorInfo;
 import com.psychoServer.repository.EvaluateInfoRepository;
 import com.psychoServer.request.OrderRequest;
+import net.bytebuddy.implementation.bind.annotation.Super;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -52,6 +53,16 @@ public class EvaluateInfoService extends BasicService<EvaluateInfo, Long> {
         counselorInfo.setCounselToday(counselorInfo.getCounselToday() + 1);
         counselorInfo.setEvaluateScore(counselorInfo.getEvaluateScore() + evaluateInfo.getStarToCounselor());
         counselorInfoService.saveOrUpdate(counselorInfo);
+
+        if (counselInfo.getSupervisorId() != null) {
+            SupervisorInfo supervisorInfo = supervisorInfoService.getById(counselInfo.getSupervisorId());
+            supervisorInfo.setCounselToday(supervisorInfo.getCounselToday() + 1);
+            supervisorInfo.setCounselTime(supervisorInfo.getCounselTime() + counselInfo.getDuration());
+            supervisorInfo.setTotalCounselNum(supervisorInfo.getTotalCounselNum() + 1);
+            supervisorInfo.setTotalCounselTime(supervisorInfo.getTotalCounselTime() + counselInfo.getDuration());
+
+            supervisorInfoService.saveOrUpdate(supervisorInfo);
+        }
 
         if (counselInfo.getSupervisorId() != null) {
             SupervisorInfo supervisorInfo = supervisorInfoService.getById(counselInfo.getSupervisorId());
