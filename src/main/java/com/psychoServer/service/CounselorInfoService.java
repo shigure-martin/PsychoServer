@@ -120,7 +120,7 @@ public class CounselorInfoService extends BasicService<CounselorInfo, Long> {
 
             result.add(request);
         }
-
+        Collections.sort(result, (o1, o2) -> o2.getCounselScore().compareTo(o1.getCounselScore()));
         return result;
     }
 }
