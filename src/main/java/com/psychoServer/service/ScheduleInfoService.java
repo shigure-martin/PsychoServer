@@ -48,7 +48,7 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
         List<ScheduleInfo> scheduleInfos = scheduleInfoRepository.findByDateBetweenAndDeleted(start, end, false);
 
         for (ScheduleInfo scheduleInfo : scheduleInfos) {
-            if (request.getWeekDaysList().contains(scheduleInfo.getDayOfWeek())) {
+            if (request.getWeekDaysList().toString().contains(scheduleInfo.getDayOfWeek())) {
                 if (scheduleInfo.getCounselorIds() != null) {
                     scheduleInfo.getCounselorIds().add(request.getId());
                 } else {
@@ -76,7 +76,7 @@ public class ScheduleInfoService extends BasicService<ScheduleInfo, Long> {
         List<ScheduleInfo> scheduleInfos = scheduleInfoRepository.findByDateBetweenAndDeleted(start, end, false);
 
         for (ScheduleInfo scheduleInfo:scheduleInfos){
-            if (request.getWeekDaysList().contains(scheduleInfo.getDayOfWeek())) {
+            if (request.getWeekDaysList().toString().contains(scheduleInfo.getDayOfWeek())) {
                 if (scheduleInfo.getSupervisorIds() != null){
                     scheduleInfo.getSupervisorIds().add(request.getId());
                 }else{
