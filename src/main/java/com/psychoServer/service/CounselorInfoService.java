@@ -2,10 +2,7 @@ package com.psychoServer.service;
 
 import com.psychoServer.constants.RoleType;
 import com.psychoServer.constants.WorkStatus;
-import com.psychoServer.entity.Account;
-import com.psychoServer.entity.CounselInfo;
-import com.psychoServer.entity.CounselorInfo;
-import com.psychoServer.entity.EvaluateInfo;
+import com.psychoServer.entity.*;
 import com.psychoServer.repository.CounselorInfoRepository;
 import com.psychoServer.request.NumRankRequest;
 import com.psychoServer.request.OrderRequest;
@@ -31,6 +28,9 @@ public class CounselorInfoService extends BasicService<CounselorInfo, Long> {
 
     @Autowired
     private CounselInfoService counselInfoService;
+
+    @Autowired
+    private SupervisorInfoService supervisorInfoService;
 
     @Autowired
     public CounselorInfoService(CounselorInfoRepository counselorInfoRepository) {
@@ -60,12 +60,37 @@ public class CounselorInfoService extends BasicService<CounselorInfo, Long> {
         return counselorInfoRepository.findByIdInAndDeleted(counselorIds, false);
     }
 
-    public CounselorInfo combine (CounselorInfo counselorInfo, Long supervisorId) {
+    public CounselorInfo combine (CounselorInfo counselorInfo, Set<Long> supervisorIds) {
+
+        List<SupervisorInfo> supervisorInfos = supervisorInfoService.getNotDeleted();
+        for (SupervisorInfo supervisorInfo : supervisorInfos) {
+
+            if (supervisorIds.contains(supervisorInfo.getId())) {
+
+                if (supervisorInfo.getCounselorIds() != null) {
+                    supervisorInfo.getCounselorIds().add(counselorInfo.getId());
+                }
+                else {
+                    Set<Long> set = new HashSet<>();
+                    set.add(counselorInfo.getId());
+                    supervisorInfo.setCounselorIds(set);
+                }
+
+            }
+            else {
+                if (supervisorInfo.getCounselorIds() != null) {
+                    supervisorInfo.getCounselorIds().remove(counselorInfo.getId());
+                }
+
+            }
+            supervisorInfoService.saveOrUpdate(supervisorInfo);
+        }
+
         if (counselorInfo.getSupervisorIds() != null) {
-            counselorInfo.getSupervisorIds().add(supervisorId);
+            counselorInfo.setSupervisorIds(supervisorIds);
         } else {
             Set<Long> set = new HashSet<>();
-            set.add(supervisorId);
+            set.addAll(supervisorIds);
             counselorInfo.setSupervisorIds(set);
         }
         return saveOrUpdate(counselorInfo);
@@ -132,6 +157,10 @@ public class CounselorInfoService extends BasicService<CounselorInfo, Long> {
         } else {
             return 0;
         }
+    }
+
+    public List<CounselorInfo> getNotDeleted() {
+        return counselorInfoRepository.findByDeleted(false);
     }
 }
 

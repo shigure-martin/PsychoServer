@@ -93,12 +93,12 @@ public class CounselorInfoController extends BaseController {
     @PutMapping("/combine")
     @ApiOperation(value = "绑定督导")
     public BaseResponse combineCounselor(@RequestBody CombineRequest combineRequest) {
-        SupervisorInfo supervisorInfo = supervisorInfoService.getById(combineRequest.getSupervisorId());
-        Preconditions.checkNotNull(supervisorInfo,"该督导不存在");
-        CounselorInfo counselorInfo = counselorInfoService.getById(combineRequest.getCounselorId());
+        //SupervisorInfo supervisorInfo = supervisorInfoService.getById(combineRequest.getSupervisorIds());
+        //Preconditions.checkNotNull(supervisorInfo,"该督导不存在");
+        CounselorInfo counselorInfo = counselorInfoService.getById((Long) combineRequest.getCounselorIds().toArray()[0]);
         Preconditions.checkNotNull(counselorInfo, "不存在该咨询师");
-        supervisorInfoService.combine(supervisorInfo, counselorInfo.getId());
-        return new SuccessResponse(counselorInfoService.combine(counselorInfo, supervisorInfo.getId()));
+        //supervisorInfoService.combine(supervisorInfo, counselorInfo.getId());
+        return new SuccessResponse(counselorInfoService.combine(counselorInfo, combineRequest.getSupervisorIds()));
     }
 
     @PutMapping("/comCountModify")
