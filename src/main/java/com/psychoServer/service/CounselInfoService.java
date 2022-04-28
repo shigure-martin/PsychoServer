@@ -35,11 +35,11 @@ public class CounselInfoService extends BasicService<CounselInfo, Long> {
     }
 
     public List<CounselInfo> getByCounselorId(Long counselorId) {
-        return counselInfoRepository.findByCounselorIdAndDeleted(counselorId, false);
+        return counselInfoRepository.findByCounselorIdAndDeletedOrderByIdDesc(counselorId, false);
     }
 
     public List<CounselInfo> getBySupervisorId(Long supervisorId) {
-        return counselInfoRepository.findBySupervisorIdAndDeleted(supervisorId, false);
+        return counselInfoRepository.findBySupervisorIdAndDeletedOrderByIdDesc(supervisorId, false);
     }
 
     public CounselStatisticRequest sumOneDay() {
