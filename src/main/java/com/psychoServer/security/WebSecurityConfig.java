@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();//may cause post api rejected
         http.headers().frameOptions().disable();
         http.authorizeRequests()
-                .antMatchers("/api/users/**", "/api/evaluate", "/api/counsel/list")
+                .antMatchers("/api/users/**", "/api/evaluate", "/api/counsel/list", "/api/counsel")
                 .permitAll()
                 .antMatchers("/api/symbol/*/base64")
                 .permitAll()
